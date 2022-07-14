@@ -11,4 +11,8 @@ RUN wget http://deb.debian.org/debian/pool/main/p/python2.7/python2.7_2.7.18.ori
     cp -a python2/debian Python-2.7.18/debian
 RUN cd Python-2.7.18 && \
     debuild -uc -us
-RUN dpkg -i *python2.7*.deb
+RUN mkdir deb && \
+    mv *python2.7*.deb deb/
+RUN dpkg -i deb/libpython2.7*.deb deb/python2.7*.deb
+RUN apt install -y python2 python-tk
+RUN dpkg -i deb/*python2.7*.deb
